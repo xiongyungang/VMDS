@@ -10,8 +10,6 @@ import java.util.LinkedHashMap;
 
 @Configuration
 public class ShiroConfig {
-
-
     /**
      * 配置Shiro的Web过滤器，拦截浏览器请求并交给SecurityManager处理
      * @return
@@ -32,29 +30,25 @@ public class ShiroConfig {
 		 */
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
         filterChainDefinitionMap.put("/", "anon");
-        filterChainDefinitionMap.put("/article/**", "anon");
-        filterChainDefinitionMap.put("/articles/**","anon");
         filterChainDefinitionMap.put("/css/**","anon");
         filterChainDefinitionMap.put("/js/**","anon");
         filterChainDefinitionMap.put("/img/**","anon");
         filterChainDefinitionMap.put("/register.html","anon");
         filterChainDefinitionMap.put("/public/login.html","anon");
-        filterChainDefinitionMap.put("/user/**","anon");
         filterChainDefinitionMap.put("/userlogin","anon");
         filterChainDefinitionMap.put("/error/**","anon");
         filterChainDefinitionMap.put("/findOne","anon");
 
+        //设置授权
+        filterChainDefinitionMap.put("/user/**","roles[admin]");
+
         filterChainDefinitionMap.put("/**","authc");
-//        //添加授权访问
-//        filterChainDefinitionMap.put("/add","perms[user:add]");
-//        filterChainDefinitionMap.put("/update","perms[user:update]");
-//        filterChainDefinitionMap.put("/*", "authc");
-//
+
         //修改跳转页面
         shiroFilterFactoryBean.setLoginUrl("/login.html");
-//        //自定义授权页面
-//        shiroFilterFactoryBean.setUnauthorizedUrl("/unAuth");
-//
+        //自定义授权页面
+        shiroFilterFactoryBean.setUnauthorizedUrl("/unAuth.html");
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         return shiroFilterFactoryBean;
@@ -75,7 +69,7 @@ public class ShiroConfig {
 
     /**
      * 创建realm
-     * @return
+     * @return 用户realm
      */
     @Bean(name="userRealm")
     public UserRealm getRealm(){

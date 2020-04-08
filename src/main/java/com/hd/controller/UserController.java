@@ -10,6 +10,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -28,7 +29,7 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping(value = "/userlogin")
-	public String device_management(String username, String password, Model model){
+	public String user_login(String username, String password, Model model){
 		UsernamePasswordToken token = new UsernamePasswordToken(username,password);
 		Subject currentUser = SecurityUtils.getSubject();
 
@@ -45,11 +46,17 @@ public class UserController {
 		if(currentUser.isAuthenticated()){
 			System.out.println("认证成功");
 			//model.addAttribute("currentUser", currentUser());
-			return "device_management";
+			return "/rpdtester"; //todo:返回json，保存用户登录信息
 		}else{
 			token.clear();
 			return "/login.html";
 		}
+	}
+
+	@GetMapping(value = "/user")
+	public String user_management(Model model)
+	{
+		return "user";
 	}
 
 }

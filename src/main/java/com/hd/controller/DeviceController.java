@@ -28,11 +28,12 @@ public class DeviceController {
 	 * @param map
 	 * @return
 	 */
-	@GetMapping("/device_management")
-	public String device_management(ModelMap map){
+	@GetMapping("/rpdtester")
+	public String rpdtester(ModelMap map){
 		List<Device> devs = deviceService.list();
+		//todo：不使用map传参
 		map.addAttribute("devs", devs);
-		return "device_management";
+		return "rpdtester";
 	}
 
 }

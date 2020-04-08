@@ -8,5 +8,9 @@
 	    <select id="findUserByName" parameterType="String" resultType="User">
 	        select * from  tb_user where name = #{name}
 	    </select>
+
+		<select id="findRoleByName" parameterType="String" resultType="Role">
+			select r.* from tb_role r inner join  tb_user u on r.role_id = u.role where u.name = #{name};
+		</select>
 	</mapper>
 

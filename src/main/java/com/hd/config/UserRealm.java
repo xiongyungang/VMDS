@@ -1,23 +1,43 @@
 package com.hd.config;
 
+import com.hd.entity.Role;
 import com.hd.entity.User;
 import com.hd.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.HashSet;
 
 public class UserRealm extends AuthorizingRealm {
     @Autowired
     UserService userService;
 
+    /**
+     * 授权
+     * @param principalCollection
+     * @return
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+        System.out.println("授权入口");
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        // 获取用户权限
+        Role role = userService.findRoleByName(user.getName());
+        //todo:role=null ??
+        // 设置该用户拥有的权限
+        HashSet<String> roles = new HashSet<>();
+        roles.add(role.getRole_name());
+        info.setRoles(roles);
+        return info;
     }
 
     /**
@@ -37,7 +57,6 @@ public class UserRealm extends AuthorizingRealm {
             // 没有该用户
             return null;
         }
-        //todo:身份验证
         //  有该用户, 判断密码
         /**
          * 参数1： 从数据库获取的userduix
