@@ -1,19 +1,21 @@
 package com.hd.entity;
 
-public class User {
-    Integer user_id;
+import java.io.Serializable;
+
+public class User implements Serializable {
+    Integer id;
     String name;
     String password;
     String description;
     String cdate;
     String udate;
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -59,7 +61,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "user_id=" + user_id +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", description='" + description + '\'' +

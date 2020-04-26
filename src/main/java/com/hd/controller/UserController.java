@@ -1,6 +1,7 @@
 package com.hd.controller;
 
 import com.hd.service.UserService;
+import com.hd.utils.Result;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -10,9 +11,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("")
@@ -29,7 +28,8 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping(value = "/userlogin")
-	public String user_login(String username, String password, Model model){
+	@ResponseBody
+	public Result user_login(String username, String password, Model model){
 		UsernamePasswordToken token = new UsernamePasswordToken(username,password);
 		Subject currentUser = SecurityUtils.getSubject();
 
@@ -46,11 +46,26 @@ public class UserController {
 		if(currentUser.isAuthenticated()){
 			System.out.println("认证成功");
 			//model.addAttribute("currentUser", currentUser());
-			return "/rpdtester"; //todo:返回json，保存用户登录信息
+			//return "/rpdtester";
+			return Result.ok();
 		}else{
 			token.clear();
-			return "/login.html";
+			return Result.build(233, "认证失败");
+			//return "/login.html";
 		}
+	}
+
+	/**
+	 *	用户退出
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "/userlogout", method = RequestMethod.GET)
+	@ResponseBody
+	public String user_logout() {
+		Subject subject = SecurityUtils.getSubject();
+		subject.logout();
+		return "OK";
 	}
 
 	@GetMapping(value = "/user")

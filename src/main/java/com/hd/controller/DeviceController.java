@@ -31,7 +31,6 @@ public class DeviceController {
 	@GetMapping("/rpdtester")
 	public String rpdtester(ModelMap map){
 		List<Device> devs = deviceService.list();
-		//todo：不使用map传参
 		map.addAttribute("devs", devs);
 		return "rpdtester";
 	}

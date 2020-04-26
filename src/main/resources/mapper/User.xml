@@ -5,9 +5,24 @@
 
 	<mapper namespace="com.hd.dao.UserMapper">
 		<!--parameterType: 参数类型-->
-	    <select id="findUserByName" parameterType="String" resultType="User">
+	    <select id="findUserByName" parameterType="String" resultMap="UserMap">
 	        select * from  tb_user where name = #{name}
 	    </select>
+
+		<!--设置结果的映射类型-->
+		<resultMap id="UserMap" type="User">
+			<!--
+			一般通过id标签来映射主键
+			column = 数据库的列名
+			property = 结果集对应的数据库列名的映射名
+			-->
+			<id column="user_id" property="id"/>
+			<result column="name" property="name"/>
+			<result column="password" property="password"/>
+			<result column="description" property="description"/>
+			<result column="cdate" property="cdate"/>
+			<result column="udate" property="udate"/>
+		</resultMap>
 
 		<select id="findRoleByName" parameterType="String" resultType="Role">
 			select r.* from tb_role r inner join  tb_user u on r.role_id = u.role where u.name = #{name};

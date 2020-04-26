@@ -34,6 +34,9 @@ spring:
   mvc:
     view:
      suffix: .html
+  redis:
+    host: 120.78.88.153
+    port: 6379
  
 mybatis:
   mapper-locations: classpath:mapper/*.xml
