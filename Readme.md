@@ -6,7 +6,9 @@
 3. 主要后端模块，前端不是重点
 
 ## 开发日志
-
+- 用户模块
+- 前端响应类
+- 程序上传
 
 ## 功能
 * 文件上传、下载
@@ -19,7 +21,7 @@
 * 缓存： redis
 * 数据库连接池： druid
 * 定时任务：quartz 、 xxl-job
-* 权限：shiro 、spring security
+* 权限：shiro
 * orm：mybatis
 * 搜索：elasticsearch
 * 工具：fastjson

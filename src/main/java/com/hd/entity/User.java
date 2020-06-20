@@ -9,6 +9,7 @@ public class User implements Serializable {
     String description;
     String cdate;
     String udate;
+    Role role;
 
     public Integer getId() {
         return id;
@@ -58,15 +59,23 @@ public class User implements Serializable {
         this.udate = udate;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", description='" + description + '\'' +
                 ", cdate='" + cdate + '\'' +
                 ", udate='" + udate + '\'' +
+                ", role=" + role +
                 '}';
     }
 }

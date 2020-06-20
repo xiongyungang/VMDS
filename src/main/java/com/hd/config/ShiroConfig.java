@@ -29,7 +29,7 @@ public class ShiroConfig {
 
     @Bean
     public RedisManager redisManager(){
-        RedisManager redisManager = new RedisManager();     // crazycake 实现
+        RedisManager redisManager = new RedisManager(); // crazycake 实现
         redisManager.setHost(host);
         redisManager.setPort(port);
         redisManager.setTimeout(180000);
@@ -45,26 +45,26 @@ public class ShiroConfig {
     public RedisSessionDAO sessionDAO(){
         RedisSessionDAO sessionDAO = new RedisSessionDAO(); // crazycake 实现
         sessionDAO.setRedisManager(redisManager());
-        sessionDAO.setSessionIdGenerator(sessionIdGenerator()); //  Session ID 生成器
+        sessionDAO.setSessionIdGenerator(sessionIdGenerator()); // Session ID 生成器
         return sessionDAO;
     }
 
     @Bean
     public SimpleCookie cookie() {
-        SimpleCookie cookie = new SimpleCookie("SHAREJSESSIONID"); //  cookie的name,对应的默认是 JSESSIONID
+        SimpleCookie cookie = new SimpleCookie("SHAREJSESSIONID"); // cookie的name,对应的默认是 JSESSIONID
         //cookie.setHttpOnly(true);  // 关闭浏览器cookie失效
-        cookie.setMaxAge(60 * 60 * 24 * 7);   // maxage正数时持久化文件存储，单位秒，到期失效；负数时内存持久化，0时删除此cookie
-        cookie.setPath("/");        //  path为 / 用于多个系统共享JSESSIONID
+        cookie.setMaxAge(60 * 60 * 24 * 7); // maxage正数时持久化文件存储，单位秒，到期失效；负数时内存持久化，0时删除此cookie
+        cookie.setPath("/");    //  path为 / 用于多个系统共享JSESSIONID
         return cookie;
     }
 
     @Bean
     public DefaultWebSessionManager sessionManager(){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        sessionManager.setGlobalSessionTimeout(-1000L);    // 设置session超时
-        sessionManager.setDeleteInvalidSessions(true);      // 删除无效session
-        sessionManager.setSessionIdCookie(cookie());            // 设置JSESSIONID
-        sessionManager.setSessionDAO(sessionDAO());         // 设置sessionDAO
+        sessionManager.setGlobalSessionTimeout(-1000L); // 设置session超时
+        sessionManager.setDeleteInvalidSessions(true);  // 删除无效session
+        sessionManager.setSessionIdCookie(cookie());    // 设置JSESSIONID
+        sessionManager.setSessionDAO(sessionDAO());     // 设置sessionDAO
         return sessionManager;
     }
 
@@ -86,7 +86,7 @@ public class ShiroConfig {
         //关联realm
         securityManager.setRealm(userRealm);
         securityManager.setSessionManager(sessionManager());    // 设置sessionManager
-        securityManager.setCacheManager(redisCacheManager()); // 配置缓存的话，退出登录的时候crazycake会报错，要求放在session里面的实体类必须有个id标识
+        securityManager.setCacheManager(redisCacheManager());   // 配置缓存的话，退出登录的时候crazycake会报错，要求放在session里面的实体类必须有个id标识
         return securityManager;
     }
 
@@ -140,7 +140,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/findOne","anon");
 
         //设置授权
-        filterChainDefinitionMap.put("/user/**","roles[admin]");
+        filterChainDefinitionMap.put("/user/**","roles[admin]"); // 设置用户
+        filterChainDefinitionMap.put("/user/**","perms[user:query]"); // 设置权限
 
         filterChainDefinitionMap.put("/**","authc");
 

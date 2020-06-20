@@ -3,6 +3,8 @@ package com.hd.service;
 import com.hd.entity.Role;
 import com.hd.entity.User;
 
+import java.util.List;
+
 
 public interface UserService {
 
@@ -19,4 +21,10 @@ public interface UserService {
 	 * @return 用户角色
 	 */
 	Role findRoleByName(String name);
+
+	/**
+	 * 获取全部用户
+	 * @return
+	 */
+	List<User> getAllUser();
 }

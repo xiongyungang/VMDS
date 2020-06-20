@@ -17,12 +17,6 @@ public class DeviceController {
 	@Autowired
 	DeviceService deviceService;
 
-	@RequestMapping("/")
-	@ResponseBody
-	public String toTest() {
-		return "Hello World";
-	}
-
 	/**
 	 *
 	 * @param map

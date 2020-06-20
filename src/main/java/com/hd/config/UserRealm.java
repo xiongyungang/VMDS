@@ -1,7 +1,9 @@
 package com.hd.config;
 
+import com.hd.entity.Auth;
 import com.hd.entity.Role;
 import com.hd.entity.User;
+import com.hd.service.RoleService;
 import com.hd.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -15,10 +17,14 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
+import java.util.List;
 
 public class UserRealm extends AuthorizingRealm {
     @Autowired
     UserService userService;
+
+    @Autowired
+    RoleService roleService;
 
     /**
      * 授权
@@ -30,13 +36,22 @@ public class UserRealm extends AuthorizingRealm {
         System.out.println("授权入口");
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        // 获取用户权限
+        // 获取用户角色
         Role role = userService.findRoleByName(user.getName());
         //todo:role=null ??
-        // 设置该用户拥有的权限
+
+        // 将角色名称提供给info
         HashSet<String> roles = new HashSet<>();
         roles.add(role.getRole_name());
         info.setRoles(roles);
+
+        // 将权限名称提供给info
+        List<Auth> auths = roleService.findAuthByRoleId(role.getRole_id());
+        for (Auth auth :
+                auths) {
+            info.addStringPermission(auth.getAuth_name());
+        }
+
         return info;
     }
 

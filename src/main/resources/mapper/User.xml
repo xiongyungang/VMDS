@@ -27,5 +27,35 @@
 		<select id="findRoleByName" parameterType="String" resultType="Role">
 			select r.* from tb_role r inner join  tb_user u on r.role_id = u.role where u.name = #{name};
 		</select>
+
+		<!--<select id="getAllUser" resultType="User">-->
+			<!--select * from   tb_user-->
+		<!--</select>-->
+
+		<select id="getAllUser" resultMap="UserAndRoleMap">
+			select u.*, r.role_name from tb_user u inner join tb_role r on u.role = r.role_id
+		</select>
+
+		<resultMap id="UserAndRoleMap" type="User">
+			<!--
+			一般通过id标签来映射主键
+			column = 数据库的列名
+			property = 结果集对应的数据库列名的映射名
+			-->
+			<id column="user_id" property="id"/>
+			<result column="name" property="name"/>
+			<result column="password" property="password"/>
+			<result column="description" property="description"/>
+			<result column="cdate" property="cdate"/>
+			<result column="udate" property="udate"/>
+
+			<!--包含role对象，property属性名称，column数据库字段-->
+			<association property="role"  column="role" resultMap="roleMap"/>
+		</resultMap>
+
+		<resultMap id="roleMap" type="com.hd.entity.Role">
+			<id column="role_id" property="role_id"/>
+			<result column="role_name" property="role_name"/>
+		</resultMap>
 	</mapper>
 

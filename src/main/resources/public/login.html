@@ -3,12 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>登录</title>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-validate/1.14.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-validate/1.14.0/localization/messages_zh.min.js"></script>
+
+    <!--通用js-->
+    <script type="text/javascript" src="js/myjs.js"></script>
+
+    <script>
+        $(function () {
+            login.init();
+        });
+    </script>
+
 </head>
 <body>
 <form id="loginForm" action="/userlogin" method="post">
 <input id="username" name="username">
 <input id="password" name="password">
-    <input type="submit" value="登录" />
+    <button type="submit" id="submitForm" name="action">登陆</button>
 </form>
 </body>
 </html>

@@ -1,5 +1,9 @@
 package com.hd.controller;
 
+import com.hd.entity.Auth;
+import com.hd.entity.Role;
+import com.hd.entity.User;
+import com.hd.service.RoleService;
 import com.hd.service.UserService;
 import com.hd.utils.Result;
 import org.apache.shiro.SecurityUtils;
@@ -13,11 +17,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("")
 public class UserController {
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	RoleService roleService;
 
 	/**
 	 *	登录验证
@@ -68,10 +77,46 @@ public class UserController {
 		return "OK";
 	}
 
+	/**
+	 * 用户管理
+	 * @param model
+	 * @return
+	 */
 	@GetMapping(value = "/user")
 	public String user_management(Model model)
 	{
+		//获取所有用户
+		List<User> users = userService.getAllUser();
+		model.addAttribute("users", users);
 		return "user";
+	}
+
+	/**
+	 * 角色管理
+	 * @param model
+	 * @return
+	 */
+	@GetMapping(value = "/role")
+	public String role_management(Model model)
+	{
+		//获取所有角色
+		List<Role> roles = roleService.findAllRole();
+		model.addAttribute("roles", roles);
+		return "role";
+	}
+
+	/**
+	 * 权限管理
+	 * @param model
+	 * @return
+	 */
+	@GetMapping(value = "/auth")
+	public String auth_management(Model model)
+	{
+		//获取所有权限
+		List<Auth> auths = roleService.findAllAuth();
+		model.addAttribute("auths", auths);
+		return "auth";
 	}
 
 }

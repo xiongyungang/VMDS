@@ -7,6 +7,8 @@ import com.hd.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -20,6 +22,11 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public Role findRoleByName(String name) {
 		return userMapper.findRoleByName(name);
+	}
+
+	@Override
+	public List<User> getAllUser() {
+		return userMapper.getAllUser();
 	}
 
 }

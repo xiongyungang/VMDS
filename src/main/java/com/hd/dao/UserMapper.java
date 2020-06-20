@@ -4,6 +4,8 @@ import com.hd.entity.Role;
 import com.hd.entity.User;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserMapper {
 
@@ -20,4 +22,10 @@ public interface UserMapper {
      * @return 用户角色
      */
     Role findRoleByName(String name);
+
+    /**
+     * 获取全部用户
+     * @return
+     */
+    List<User> getAllUser();
 }

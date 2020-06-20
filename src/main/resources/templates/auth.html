@@ -101,18 +101,16 @@
                 </colgroup>
                 <thead>
                 <tr>
-                    <th>用户名</th>
-                    <th>所属角色</th>
+                    <th>权限名</th>
                     <th>描述</th>
                     <th>创建时间</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="user:${users}">
-                    <td th:text="${user.name}">用户名</td>
-                    <td th:text="${user.role.role_name}">所属角色</td>
-                    <td th:text="${user.description}">描述</td>
-                    <td th:text="${user.cdate}">创建时间</td>
+                <tr th:each="auth:${auths}">
+                    <td th:text="${auth.auth_name}">权限名</td>
+                    <td th:text="${auth.auth_desc}">描述</td>
+                    <td th:text="${auth.create_time}">创建时间</td>
                 </tr>
                 </tbody>
             </table>
