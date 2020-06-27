@@ -139,6 +139,9 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/error/**","anon");
         filterChainDefinitionMap.put("/findOne","anon");
 
+        filterChainDefinitionMap.put("/pnet/importRPD","anon");
+        filterChainDefinitionMap.put("/pnet","anon");
+
         //设置授权
         filterChainDefinitionMap.put("/user/**","roles[admin]"); // 设置用户
         filterChainDefinitionMap.put("/user/**","perms[user:query]"); // 设置权限

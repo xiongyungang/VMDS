@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<mapper namespace="com.hd.dao.ReleaseMapper">
+	    <select id="add" parameterType="com.hd.entity.Release">
+	        insert into rpd_release (releasenr, md5,system, releaseconfig,releasefilepath, releasedesc, create_time) values (#{releasenr},#{md5},#{system},#{releaseconfig},#{releasefilepath},#{releasedesc},#{create_time})
+	    </select>
+
+		<select id="findAll" resultType="com.hd.entity.Release">
+			select r.releasenr, r.system, r.releaseconfig, r.releasedesc, r.create_time from rpd_release r
+		</select>
+	</mapper>
+

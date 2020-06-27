@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>VMDS | RpdRealse</title>
+    <title>VMDS</title>
     <link th:href="@{/js/layui/css/layui.css}" rel="stylesheet"/>
 </head>
 <body class="layui-layout-body">
@@ -22,18 +22,20 @@
                 </colgroup>
                 <thead>
                 <tr>
-                    <th>用户名</th>
-                    <th>所属角色</th>
+                    <th>版本号</th>
+                    <th>系统名称</th>
+                    <th>程序配置</th>
                     <th>描述</th>
                     <th>创建时间</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="user:${users}">
-                    <td th:text="${user.name}">用户名</td>
-                    <td th:text="${user.name}">所属角色</td>
-                    <td th:text="${user.description}">描述</td>
-                    <td th:text="${user.cdate}">创建时间</td>
+                <tr th:each="rel:${rels}">
+                    <td th:text="${rel.releasenr}">版本号</td>
+                    <td th:text="${rel.system}">系统名称</td>
+                    <td th:text="${rel.releaseconfig}">程序配置</td>
+                    <td th:text="${rel.releasedesc}">描述</td>
+                    <td th:text="${rel.create_time}">创建时间</td>
                 </tr>
                 </tbody>
             </table>

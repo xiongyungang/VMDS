@@ -20,6 +20,7 @@ public  class DeviceServiceImplTest {
     public  void list() {
         List<Device> list = deviceService.list();
         System.out.println("list = " + list);
+
     }
 
 }
