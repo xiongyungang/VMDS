@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>VMDS</title>
+    <link href="/js/layui/css/layui.css" rel="stylesheet"/>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-validate/1.14.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-validate/1.14.0/localization/messages_zh.min.js"></script>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+
+    <!--通用js-->
+    <script type="text/javascript" src="js/myjs.js"></script>
+
+
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">VMDS</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq";; class="layui-nav-img"/>
+                    贤心
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="/userlogout">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item"><a href="/">首页</a></li>
+                <li class="layui-nav-item"><a href="/rpdtester">设备管理</a></li>
+                <li class="layui-nav-item"><a href="/rpdrelease">程序管理</a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">数据管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">任务管理</a></dd>
+                        <dd><a href="javascript:;">列表二</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">统计管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">日志管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">车辆数据</a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">车辆配置码规则管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">日志管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">用户及权限</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/user/users">用户管理</a></dd>
+                    </dl>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/user/roles">角色管理</a></dd>
+                    </dl>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/user/auth">权限管理</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="layui-container" style="padding: 15px;">
+            <div class="layui-row">
+                <div class="layui-col-md4 layui-col-md-offset4" style="text-align:center">
+                    <button type="button" class="layui-btn layui-btn-primary" onclick="home_reset()">更新</button>
+                </div>
+            </div>
+        </div>
+            <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+            <div id="main" style="width: 600px;height:400px;"></div>
+
+            <script type="text/javascript">
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('main'));
+
+                var user_num = 0;
+                var dev_num = 0;
+                var program_num = 0;
+
+                $.ajax({
+                    async: false,
+                    url: "home_welcome",
+                    type: "get",
+                    content: "application/json;charset=utf-8",
+                    success: function (result) {
+                        if (result) {
+                            user_num = result[2].ct;
+                            dev_num = result[0].ct;
+                            program_num = result[1].ct;
+                        } else {
+                            //Error.displayError(result);
+                        }
+                    },
+                    error: function () {
+                        console.log(result);
+                        alert("error！");
+                    }
+                });
+
+                // 指定图表的配置项和数据
+                var option = {
+                    title: {
+                        text: 'System Report'
+                    },
+                    itemStyle: {
+                        // 设置扇形的颜色
+                        color: '#848484'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer:{
+                            type: 'cross',
+                            label: {
+                                backgroundColor: '#283b56'
+                            }
+                        }
+                    },
+                    toolbox:{
+                        show: true,
+                        feature: {
+                            dataView: {readOnly: false},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    },
+                    legend: {
+                        data:['数量']
+                    },
+                    xAxis: {
+                        data: ["设备","程序","用户"]
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: '数量',
+                        type: 'bar',
+                        data: [dev_num, program_num, user_num],
+                        itemStyle : {
+                            normal: {
+                                label : {
+                                    show: true//是否展示
+                                }
+                            }
+                        }
+                    }],
+                    color: ['#464646']
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            </script>
+
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script src="/js/layui/layui.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+
+    function home_reset() {
+        var user_num = 0;
+        var dev_num = 0;
+        var program_num = 0;
+
+        $.ajax({
+            url: "home_reset",
+            type: "get",
+            success: function (result) {
+                if (result['status'] == "true"){
+                    user_num = result['user_num'];
+                    dev_num = result['dev_num'];
+                    program_num = result['program_num'];
+                }
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: 'System Report'
+            },
+            itemStyle: {
+                // 设置扇形的颜色
+                color: '#848484'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer:{
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#283b56'
+                    }
+                }
+            },
+            toolbox:{
+                show: true,
+                feature: {
+                    dataView: {readOnly: false},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            legend: {
+                data:['数量']
+            },
+            xAxis: {
+                data: ["设备","程序","用户"]
+            },
+            yAxis: {},
+            series: [{
+                name: '数量',
+                type: 'bar',
+                data: [dev_num, program_num, user_num],
+                itemStyle : {
+                    normal: {
+                        label : {
+                            show: true//是否展示
+                        }
+                    }
+                }
+            }],
+            color: ['#464646']
+        };
+
+        var myChart = echarts.init(document.getElementById('main'));
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option, true);
+    }
+</script>
+</body>
+</html>

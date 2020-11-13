@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hd.dao.DeviceMapper">
+    <!--id: 对应java方法名-->
+    <!--resultType： 对应java方法返回类型-->
+    <select id="list" resultType="Device">
+	        select * from   tb_device
+	</select>
+
+    <select id="listByDevice" resultType="Device" parameterType="Device">
+		select * from tb_device
+		<trim prefix="where" prefixOverrides="and |or ">
+			<if test="device_name != null and device_name != ''">
+				and tb_device.device_name LIKE concat('%', concat(#{device_name}, '%'))
+			</if>
+			<if test="device_number != null and device_number != 0">
+				and tb_device.device_number = #{device_number}
+			</if>
+		</trim>
+	</select>
+
+	<sql id="query_device_where">
+		<where>
+			<if test="device_name != null and device_name != ''">
+				and tb_device.device_name LIKE concat('%', concat(#{device_name}, '%'))
+			</if>
+			<if test="device_number != null and device_number != 0">
+				and tb_device.device_number = #{device_number}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="query_device_choose">
+		<choose>
+			<when test="device_name != null and device_name != ''">
+				AND tb_device.device_name LIKE concat('%', concat(#{device_name}, '%'))
+			</when>
+			<when test="device_number != null and device_number != 0">
+				AND tb_device.device_number = #{device_number}
+			</when>
+			<otherwise>
+				AND tb_device.curr_vers = '2.5.5'
+			</otherwise>
+		</choose>
+	</sql>
+</mapper>
+

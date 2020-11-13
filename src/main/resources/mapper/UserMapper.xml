@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hd.dao.UserMapper">
+    <!--id: 对应java方法名-->
+    <!--resultType： 对应java方法返回类型-->
+    <select id="getUserByLogin" resultMap="UserMap" parameterType="java.lang.String">
+    select * from  tb_user where tb_user.name = #{username} AND tb_user.password = #{password}
+    </select>
+
+    <select id="getUserByToken" resultMap="UserMap" parameterType="java.lang.String">
+        select * from  tb_user where tb_user.token = #{token}
+    </select>
+
+    <update id="saveUser" parameterType="com.hd.entity.User">
+        UPDATE tb_user SET name=#{name},password=#{password},description=#{description},cdate=#{cdate},udate=#{udate},role=#{role},token=#{token} WHERE user_id = #{id}
+    </update>
+
+    <!--设置结果的映射类型-->
+    <resultMap id="UserMap" type="com.hd.entity.User">
+        <!--
+        一般通过id标签来映射主键
+        column = 数据库的列名
+        property = 结果集对应的数据库列名的映射名
+        -->
+        <id column="user_id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="password" property="password"/>
+        <result column="description" property="description"/>
+        <result column="cdate" property="cdate"/>
+        <result column="udate" property="udate"/>
+        <result column="token" property="token"/>
+    </resultMap>
+</mapper>
+

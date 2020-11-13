@@ -1,0 +1,21 @@
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>2.0</jsp-version>
+    <short-name>Example TLD</short-name>
+    <tag>
+        <name>Hello</name>
+        <tag-class>com.hd.tag.MyTag</tag-class>
+        <attribute>
+            <name>number</name>
+            <!--定义此属性必须存在-->
+            <required>true</required>
+            <!--EL表达式支持-->
+            <rtexprvalue>true</rtexprvalue>
+            <!--类型，默认String-->
+            <type>java.lang.String</type>
+            <!--说明-->
+            <description>This is number attribute.</description>
+        </attribute>
+        <body-content>empty</body-content>
+    </tag>
+</taglib>
