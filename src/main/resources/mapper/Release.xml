@@ -11,5 +11,10 @@
 		<select id="findAll" resultType="com.hd.entity.Release">
 			select r.releasenr, r.system, r.releaseconfig, r.releasedesc, r.create_time from rpd_release r
 		</select>
+
+		<!-- 查询首页信息 -->
+		<select id="count" resultType="Integer">
+			select count(*)  from rpd_release
+		</select>
 	</mapper>
 

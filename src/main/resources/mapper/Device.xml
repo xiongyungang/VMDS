@@ -9,5 +9,10 @@
 	    <select id="list" resultType="Device">
 	        select * from   tb_device
 	    </select>
+
+		<!-- 查询首页信息 -->
+		<select id="count" resultType="Integer">
+			select count(*)  from tb_device
+		</select>
 	</mapper>
 

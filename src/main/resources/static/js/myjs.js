@@ -1,4 +1,6 @@
+
 var login = {
+
     URL: {
         userLoginURL: function () {
             return "userlogin";
@@ -41,6 +43,25 @@ var login = {
     init: function () {
         login.validateForm();
 
+    },
+
+    home: function (callback) {
+        $.ajax({
+            //async: false,
+            url: "redis_home",
+            type: "get",
+            success: function (result) {
+                if (result) {
+                    callback(result);
+                } else {
+                    //Error.displayError(result);
+                }
+            },
+            error: function () {
+                console.log(result);
+                alert("错误！");
+            }
+        });
     }
 
 };

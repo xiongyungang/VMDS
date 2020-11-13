@@ -36,6 +36,11 @@
 			select u.*, r.role_name from tb_user u inner join tb_role r on u.role = r.role_id
 		</select>
 
+		<!-- 查询首页信息 -->
+		<select id="count" resultType="Integer">
+			select count(*)  from tb_user
+		</select>
+
 		<resultMap id="UserAndRoleMap" type="User">
 			<!--
 			一般通过id标签来映射主键
