@@ -12,4 +12,6 @@ public interface RpdService {
 	List<Release> list();
 
 	void insert(Release release);
+
+	Integer count();
 }

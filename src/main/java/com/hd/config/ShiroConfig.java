@@ -138,6 +138,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/userlogout","anon");
         filterChainDefinitionMap.put("/error/**","anon");
         filterChainDefinitionMap.put("/findOne","anon");
+        filterChainDefinitionMap.put("/redis_home","anon");
+        filterChainDefinitionMap.put("/home_reset","anon");
 
         filterChainDefinitionMap.put("/pnet/importRPD","anon");
         filterChainDefinitionMap.put("/pnet","anon");

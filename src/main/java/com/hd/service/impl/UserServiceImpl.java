@@ -29,4 +29,9 @@ public class UserServiceImpl implements UserService{
 		return userMapper.getAllUser();
 	}
 
+	@Override
+	public Integer count() {
+		return userMapper.count();
+	}
+
 }

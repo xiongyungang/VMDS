@@ -27,4 +27,9 @@ public class RpdServiceImpl implements RpdService {
 	public void insert(Release release) {
 		releaseMapper.add(release);
 	}
+
+	@Override
+	public Integer count() {
+		return releaseMapper.count();
+	}
 }

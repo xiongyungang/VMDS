@@ -27,4 +27,6 @@ public interface UserService {
 	 * @return
 	 */
 	List<User> getAllUser();
+
+	Integer count();
 }

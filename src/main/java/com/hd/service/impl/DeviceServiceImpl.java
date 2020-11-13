@@ -2,6 +2,7 @@ package com.hd.service.impl;
 
 import com.hd.dao.DeviceMapper;
 import com.hd.entity.Device;
+import com.hd.entity.Report;
 import com.hd.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,11 @@ public class DeviceServiceImpl implements DeviceService{
 	
 	public List<Device> list(){
 		return deviceMapper.list();
+	}
+
+	@Override
+	public Integer count() {
+		return deviceMapper.count();
 	}
 
 }

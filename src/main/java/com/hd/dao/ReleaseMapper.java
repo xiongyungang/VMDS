@@ -10,4 +10,11 @@ public interface ReleaseMapper {
     List<Release> findAll();
 
     void add(Release release);
+
+    /**
+     * 获取程序数
+     * @return
+     */
+    Integer count();
+
 }

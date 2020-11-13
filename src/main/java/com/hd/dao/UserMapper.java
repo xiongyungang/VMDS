@@ -28,4 +28,10 @@ public interface UserMapper {
      * @return
      */
     List<User> getAllUser();
+
+    /**
+     * 获取用户数
+     * @return
+     */
+    Integer count();
 }
