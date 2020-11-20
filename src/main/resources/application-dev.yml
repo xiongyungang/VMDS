@@ -39,11 +39,19 @@ spring:
     port: 6379
  
 mybatis:
+  # Mapper文件位置
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.hd.entity
-#showSql
+  # Mybatis配置文件位置
+  #config-location: classpath:config/mybatis-config.xml
+
+# springboot默认日志实现：logback
 logging:
+  pattern:
+    console: "%d - %msg%n"
   level:
-    com:
-      hd:
-        dao : debug
+    # 这里可以是包名也可以是类名
+    # DEBUG<INFO<WARN<ERROR<FATAL
+    com.hd: debug
+    com.hd.dao: debug
+  file: e:/log.txt  # 日志文件输出

@@ -33,8 +33,9 @@ public class UserRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        System.out.println("授权入口");
+        // 这里拿到的User对象是认证时设置的SimpleAuthenticationInfo类的参数
         User user = (User) SecurityUtils.getSubject().getPrincipal();
+        // 授权信息对象
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         // 获取用户角色
         Role role = userService.findRoleByName(user.getName());
@@ -45,10 +46,11 @@ public class UserRealm extends AuthorizingRealm {
         roles.add(role.getRole_name());
         info.setRoles(roles);
 
-        // 将权限名称提供给info
+        // 获取角色所有权限，将权限名称提供给info
         List<Auth> auths = roleService.findAuthByRoleId(role.getRole_id());
         for (Auth auth :
                 auths) {
+            // 设置当前用户的权限
             info.addStringPermission(auth.getAuth_name());
         }
 
@@ -67,13 +69,13 @@ public class UserRealm extends AuthorizingRealm {
         String userName = (String)authenticationToken.getPrincipal();
         //  查询有无该用户
         User user = userService.findUserByName(userName);
-        if (null == user)
-        {
+        if (null == user) {
             // 没有该用户
-            return null;
+            return null;  // 登陆时会抛出UnknownAccountException
         }
-        //  有该用户, 判断密码
+
         /**
+         * 密码认证
          * 参数1： 从数据库获取的userduix
          * 参数2： 密码
          * 参数3： 当前realm名称

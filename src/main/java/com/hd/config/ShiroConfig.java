@@ -119,14 +119,14 @@ public class ShiroConfig {
         //设置安全管理器
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
-		/*
-		 * 添加shiro内置过滤器:
-		 * 		anon:无需认证
-		 * 		authc:必须认证才可以访问
-		 * 		user:如果使用remember的功能才可以访问
-		 * 		perms:该资源必须得到资源权限才可以访问
-		 * 		roles:该资源必须得到角色权限才可以访问
-		 */
+    /*
+     * 添加shiro内置过滤器:
+     * anon:无需认证
+     * authc:必须认证才可以访问
+     * user:如果使用remember的功能才可以访问
+     * perms:该资源必须得到资源权限才可以访问
+     * roles:该资源必须得到角色权限才可以访问
+     */
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
         filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/css/**","anon");

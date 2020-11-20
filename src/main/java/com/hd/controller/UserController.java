@@ -39,11 +39,14 @@ public class UserController {
 	@PostMapping(value = "/userlogin")
 	@ResponseBody
 	public Result user_login(String username, String password, Model model){
+		// 封装当前用户数据
 		UsernamePasswordToken token = new UsernamePasswordToken(username,password);
+		// 获取当前用户
 		Subject currentUser = SecurityUtils.getSubject();
 
 		try {
-			//主体提交登录请求到SecurityManager
+			// 执行登陆操作
+			// 主体提交登录请求到SecurityManager
 			currentUser.login(token);
 		}catch (IncorrectCredentialsException ice){
 			model.addAttribute("msg","密码不正确");
@@ -53,14 +56,10 @@ public class UserController {
 			model.addAttribute("msg","状态不正常");
 		}
 		if(currentUser.isAuthenticated()){
-			System.out.println("认证成功");
-			//model.addAttribute("currentUser", currentUser());
-			//return "/rpdtester";
-			return Result.ok();
+			return Result.ok("auth success");
 		}else{
 			token.clear();
-			return Result.build(233, "认证失败");
-			//return "/login.html";
+			return Result.build(100001, "auth fail");
 		}
 	}
 
